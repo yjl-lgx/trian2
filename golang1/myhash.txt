@@ -1,0 +1,133 @@
+package main   
+import (   
+        "fmt"   
+        )   
+//定义基本数据和表
+type hash_node struct {   
+    date int ; 
+    next *hash_node ;
+} 
+  
+type hash_table struct {
+    value[10] *hash_node;
+}
+//创建表
+func create_table() *hash_table{
+    myhash := new(hash_table)
+    return myhash
+}
+//在表中寻找数据
+func get_date(myhash *hash_table,date int) *hash_node {
+    if myhash == nil{
+        fmt.Println("myhash get is null")
+        return nil
+    }
+    var pnode *hash_node
+    pnode = myhash.value[date % 10]
+    if (nil == pnode){
+        return nil
+    }
+    for nil != pnode {
+        if date == pnode.date {
+            return pnode
+        }
+        pnode = pnode.next
+    } 
+    return nil
+}
+
+//在表中插入数据
+func insert_data_hash(myhash *hash_table,date int) bool {
+    if myhash == nil{
+        fmt.Println("myhash  insert is null")
+        return false 
+    }
+    var pnode *hash_node
+    if (nil == myhash.value[date % 10]){
+        pnode := new(hash_node)
+        pnode.date = date
+        myhash.value[date % 10] = pnode
+        return true
+    }
+    if (nil != get_date(myhash,date)){
+        return false
+    }
+    pnode = myhash.value[date % 10]
+    for nil != pnode.next {
+        pnode = pnode.next
+    }
+
+    pnode.next = new(hash_node)
+    pnode.next.date = date
+    return true
+}
+
+//删除表中数据
+func delete_date_hash(myhash *hash_table ,date int) bool {
+    var phead *hash_node
+    var pnode *hash_node
+    if (nil == myhash || nil == myhash.value[date % 10]){
+        fmt.Println("delete_date error")
+        return false
+    }
+    pnode = get_date(myhash,date)
+    if (nil == pnode) {
+        return false
+    }
+    if (pnode == myhash.value[date % 10]){
+        myhash.value[date % 10] = pnode.next
+        return true
+    }
+    phead = myhash.value[date % 10]
+    for nil != phead.next{
+        phead = phead.next
+    }    
+    phead.next = pnode.next
+    return true
+}
+//打印数据
+func hash_print(myhash *hash_table) bool{
+    if nil == myhash {
+        fmt.Println("空数据") 
+        return false
+    }
+    var i = 0
+    for i < 10 {
+        fmt.Println("数据 >>",i,myhash.value[i])
+        i = i+1
+    }
+
+    return true
+}
+
+func main() {  
+    var myhash *hash_table 
+    var i = 0
+    myhash = create_table() 
+    //插入数据
+    for i < 10{
+        if insert_data_hash(myhash , i+10){
+            i = i+1
+        }else{
+            fmt.Println("insert_data error")
+            break
+        }
+    }
+    //查找数据
+    var mydata *hash_node
+    mydata = get_date(myhash,15)
+    if nil == mydata {
+        fmt.Println("没有数据")
+        return 
+    }else{
+        fmt.Println("数据存在于第",mydata.date % 10)
+    }
+    //删除数据
+    if delete_date_hash(myhash,12){
+        fmt.Println("删除成功")
+    }else{
+        fmt.Println("删除失败")
+    }
+    //打印数据
+    hash_print(myhash)
+}

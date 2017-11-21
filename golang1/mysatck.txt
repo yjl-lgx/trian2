@@ -1,0 +1,63 @@
+package main
+import (
+    "errors"
+    "fmt"
+)
+
+type Stack struct {
+	date []interface{} 
+}
+//新建一个栈
+func NewStack() *Stack {
+    return &Stack{}
+}
+//测栈有多少元素
+func (MySk *Stack)Size()(int){	
+	return len(MySk.date)
+}
+//入栈
+func (MySk *Stack)Push(value ...interface{}){
+    MySk.date = append(MySk.date,value...)
+}
+//出栈
+func (MySk *Stack)Pop()(err error){
+    if MySk.Size()> 0 {
+        MySk.date = MySk.date[:MySk.Size()- 1]
+        return nil
+    }
+    return errors.New("stack null")
+}
+//判断为空吗
+func (MySk *Stack)Empty()(bool){
+	if MySk.date == nil || MySk.Size() == 0 {
+		return true
+	}
+	return false
+}
+//
+将栈内数据打印	
+func (MySk *Stack)Print(){
+	for i := len(MySk.date) - 1; i >= 0; i--{	
+		fmt.Println(i,"=>",MySk.date[i])
+	}
+}
+func main() {
+    sk := NewStack()  
+    if sk.Empty() {
+        fmt.Println( "sk为空") 
+    }else{  
+        fmt.Println("sk不为空! ",sk.Size()) 
+    }
+   //手动入栈
+    sk.Push(1)
+    sk.Push(2)
+    sk.Push(3)
+    sk.Push(4)
+    sk.Push(5)
+    fmt.Println("当前Size() = ",sk.Size())  
+    sk.Print() //打印出栈内容
+    //手动出栈两个元素
+    sk.Pop()
+    sk.Pop()  
+    sk.Print() //打印出栈内容
+}
