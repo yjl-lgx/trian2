@@ -1,0 +1,21 @@
+package main
+import (
+    "sync"
+    "fmt"
+)
+var m *MoNo
+var once sync.Once
+func GetMoNo() *MoNo {
+    once.Do(func() {
+        m = &MoNo {}
+    })
+    return m
+}
+type MoNo struct {}
+func (p MoNo) Manage() {
+    fmt.Println("this is MONO")
+}
+func main(){
+    GetMoNo().Manage()
+    
+}
