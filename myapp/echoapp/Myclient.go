@@ -12,8 +12,8 @@ import (
 )
 
 const (
-    address    = "localhost:60001"
-    address2   = "localhost:60002"
+    address    = ":60001"
+    address2   = ":60002"
 )
 
 func Mecho(){
