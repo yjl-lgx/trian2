@@ -1,31 +1,32 @@
 package main 
 import "fmt"
-
+//数据表
 type MyNode struct{
 	Data int
 	Next *MyNode
 }
-
+//得到数据表头
 func Getfirst(h *MyNode) *MyNode {
 	if h.Next == nil{
 		return nil
 	}
 	return h.Next
 } 
-
+//得到数据尾
 func GetLast(h *MyNode) *MyNode {
 	if h.Next == nil {
 		return nil
 	}
 	i := h
 	for i.Next != nil {
+		i = i.Next
 		if i.Next == nil {
 			return i
 		}
 	}
 	return nil
 }
-
+//得到数据长度
 func GetLength(h *MyNode) int {
 	var i int = 0
 	n := h 
@@ -35,7 +36,7 @@ func GetLength(h *MyNode) int {
 	}
 	return i
 }
-
+//插入数据
 func Insert(h,d *MyNode,p int) bool {
 	if h.Next == nil {
 		h.Next = d
@@ -63,9 +64,10 @@ func Insert(h,d *MyNode,p int) bool {
 	}
 	return false	
 }		
-
+//查找数据
 func Getdate(h *MyNode,p int) *MyNode {
 	if p < 0 || p > GetLength(h) {
+		fmt.Println("数据超过范围")
 		return nil 
 	}
 	var i int = 0
@@ -79,17 +81,77 @@ func Getdate(h *MyNode,p int) *MyNode {
 	}
 	return nil 
 }
-
+//删除数据
+func Del_date(h *MyNode,p int) *MyNode {
+	if p < 0 || p > GetLength(h) {
+		fmt.Println("数据超过范围")
+		return nil 
+	}else{
+	n := h
+	for i :=0 ;i < p-1 ;i++ {
+		n = n.Next
+	}
+	n.Next = n.Next.Next
+	fmt.Println(n.Data)
+	}
+return nil
+}
+//修改数据
+func Chg_date(h *MyNode,p int,pm int) *MyNode {
+	if p < 0 || p > GetLength(h) {
+		fmt.Println("数据超过范围")
+		return nil 
+	}else{
+	n := h
+	for i :=0 ;i < p ;i++ {
+		n = n.Next
+	}
+	n.Data = pm
+	//fmt.Println(n.Data)
+	}
+return nil
+}
+//打印数据
+func Ply_date(h *MyNode) *MyNode{
+	if h.Next == nil{
+		fmt.Println("表为空")
+		return nil
+	}
+	var i int = 0
+	n := h
+	for n.Next != nil {
+		i++
+		n = n.Next
+		fmt.Println(n.Data)
+	}
+	return nil
+}
 func main() {
 	var h MyNode
 	for i := 1;i <= 10;i++ {
 		var d MyNode
-		d.Data = i
+		d.Data = i+20
+		//插入数据
+		fmt.Println("插入数据",i+20)
 		Insert(&h,&d,i)
-		fmt.Println(Getdate(&h, i))
+		//fmt.Println(Getdate(&h, i))
 	}
-	fmt.Println(GetLength(&h))
-	fmt.Println(Getfirst(&h))
-	fmt.Println(GetLast(&h))
-	fmt.Println(Getdate(&h, 8))
+	//数据长度
+	fmt.Println("数据长度",GetLength(&h))
+	//第一个数据
+	fmt.Println("第一个数据",Getfirst(&h))
+	//最后一个数据
+	fmt.Println("最后一个数据",GetLast(&h))
+	//得到第8个数据
+	fmt.Println("查询第8个数据",Getdate(&h, 8))
+	//删除第四个数据
+	fmt.Println("删除第四数据")
+	Del_date(&h,4)
+	//修改第3个参数为88
+	Chg_date(&h,3,88)
+	//查询第三个参数信息
+	fmt.Println("查询第3个参数信息",Getdate(&h, 3))
+	//打印所有数据
+	fmt.Println("打印数据")
+	Ply_date(&h)
 }

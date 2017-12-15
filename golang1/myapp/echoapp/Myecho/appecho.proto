@@ -1,0 +1,20 @@
+syntax = "proto3" ;
+package echoapp ;
+
+message TimeResponse {
+    string ti = 1; 
+}
+
+message MyInfoResponse {
+    string name  = 1; 
+}
+
+service Data {
+    rpc GetInfo(stream MyInfoResponse) returns (stream MyInfoResponse){}
+
+}
+
+service TimeData {
+   rpc TimePush(stream TimeResponse) returns (stream TimeResponse){}
+
+}

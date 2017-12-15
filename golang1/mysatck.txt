@@ -22,6 +22,9 @@ func (MySk *Stack)Push(value ...interface{}){
 //出栈
 func (MySk *Stack)Pop()(err error){
     if MySk.Size()> 0 {
+		l := MySk.Size()
+		//fmt.Println(l,"=>",MySk.date[l])
+		fmt.Println("=>",l)
         MySk.date = MySk.date[:MySk.Size()- 1]
         return nil
     }
@@ -34,30 +37,36 @@ func (MySk *Stack)Empty()(bool){
 	}
 	return false
 }
-//
-将栈内数据打印	
+//将栈内数据打印	
 func (MySk *Stack)Print(){
 	for i := len(MySk.date) - 1; i >= 0; i--{	
 		fmt.Println(i,"=>",MySk.date[i])
 	}
 }
 func main() {
-    sk := NewStack()  
+	//新开辟一个栈
+	sk := NewStack()
+	fmt.Println("查看栈内是否有数据")  
     if sk.Empty() {
         fmt.Println( "sk为空") 
     }else{  
         fmt.Println("sk不为空! ",sk.Size()) 
     }
    //手动入栈
+   fmt.Println("调用接口手动入栈5个数据")
     sk.Push(1)
     sk.Push(2)
     sk.Push(3)
     sk.Push(4)
-    sk.Push(5)
-    fmt.Println("当前Size() = ",sk.Size())  
-    sk.Print() //打印出栈内容
-    //手动出栈两个元素
+	sk.Push(5)
+	fmt.Println("打印栈内的内容")
+	sk.Print() //打印出栈内容
+	fmt.Println("测试当前栈的Size() = ",sk.Size()) 
+	//手动出栈两个元素
+	fmt.Println("手动出栈两个数据")
     sk.Pop()
-    sk.Pop()  
-    sk.Print() //打印出栈内容
+	sk.Pop()
+	fmt.Println("测试当前栈的Size() = ",sk.Size())  
+	fmt.Println("打印栈内的内容")
+    sk.Print() 
 }

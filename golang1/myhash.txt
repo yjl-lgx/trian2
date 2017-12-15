@@ -56,7 +56,6 @@ func insert_data_hash(myhash *hash_table,date int) bool {
     for nil != pnode.next {
         pnode = pnode.next
     }
-
     pnode.next = new(hash_node)
     pnode.next.date = date
     return true
@@ -106,6 +105,7 @@ func main() {
     myhash = create_table() 
     //插入数据
     for i < 10{
+		fmt.Println("在表中插入数据",i+10)
         if insert_data_hash(myhash , i+10){
             i = i+1
         }else{
@@ -114,7 +114,8 @@ func main() {
         }
     }
     //查找数据
-    var mydata *hash_node
+	var mydata *hash_node
+	fmt.Println("查询15在数据表中存在于第几个")
     mydata = get_date(myhash,15)
     if nil == mydata {
         fmt.Println("没有数据")
@@ -122,12 +123,20 @@ func main() {
     }else{
         fmt.Println("数据存在于第",mydata.date % 10)
     }
-    //删除数据
+	//删除数据
+	fmt.Println("删除数据12")
     if delete_date_hash(myhash,12){
         fmt.Println("删除成功")
     }else{
         fmt.Println("删除失败")
-    }
-    //打印数据
+	}
+	fmt.Println("删除数据20")
+    if delete_date_hash(myhash,12){
+        fmt.Println("删除成功")
+    }else{
+        fmt.Println("删除失败")
+	}
+	//打印数据
+	fmt.Println("打印数据表中的数据")
     hash_print(myhash)
 }
